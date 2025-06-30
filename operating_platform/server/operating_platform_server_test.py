@@ -218,7 +218,8 @@ class FlaskServer:
         self.app.add_url_rule('/api/info', 'system_info', self.system_info, methods=['GET'])
         
         # 视频流管理
-        self.app.add_url_rule('/api/stream_info', 'get_streams', self.get_streams, methods=['GET'])
+        self.app.add_url_rule('/api/stream_info', 'stream_info', self.stream_info, methods=['GET'])
+        self.app.add_url_rule('/api/get_streams', 'get_streams', self.get_streams, methods=['GET'])
         self.app.add_url_rule('/api/start_stream', 'start_stream', self.start_stream, methods=['POST'])
         self.app.add_url_rule('/api/get_stream/<stream_id>', 'stream_video', self.stream_video, methods=['GET'])
         self.app.add_url_rule('/api/stop_stream/<stream_id>', 'stop_stream', self.stop_stream, methods=['POST'])
@@ -270,6 +271,16 @@ class FlaskServer:
             "timestamp": time.time(),
             "streams": self.stream_status
         })
+    
+    def stream_info(self):
+        """获取可用视频流列表"""
+        status = self.stream_status.copy()
+        streams = [
+            {"id": sid, "name": info["name"]} 
+            for sid, info in status.items()
+        ]
+        print(f"sget_treams:{streams}")
+        return jsonify({"streams": streams})
     
     def get_streams(self):
         try:
