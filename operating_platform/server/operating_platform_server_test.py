@@ -453,7 +453,7 @@ class FlaskServer:
     def start_collection(self):
         try:
             data = request.get_json()
-            data['mechine_id'] = get_machine_id()
+            data['machine_id'] = get_machine_id()
             self.task_steps = data
             now_time = time.time()
             self.send_message_to_robot(self.robot_sid, message={'cmd': 'start_collection','msg': data})
