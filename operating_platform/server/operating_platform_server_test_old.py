@@ -74,7 +74,7 @@ class FlaskServer:
     def __init__(self):
         # 初始化Flask应用
         self.app = Flask(__name__)
-        self.app.secret_key = 'agilex'  # 暂时密钥
+        self.app.secret_key = os.environ['FLASK_SECRET_KEY']
         self.socketio = SocketIO(self.app, cors_allowed_origins="*")
         CORS(self.app)
         
