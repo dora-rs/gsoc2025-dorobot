@@ -18,6 +18,7 @@ from operating_platform.robot.robots.configs import (
     AlohaRobotConfig,
     ManipulatorRobotConfig,
     RobotConfig,
+    PikaV1RobotConfig,
     AdoraRobotConfig,
     AdoraDualRobotConfig,
     RealmanRobotConfig,
@@ -109,6 +110,7 @@ def make_robot_config(robot_type: str, **kwargs) -> RobotConfig:
 
 
 def make_robot_from_config(config: RobotConfig):
+    print("In make_robot_from_config")
 
     if isinstance(config, AdoraRobotConfig):
         from operating_platform.robot.robots.adora_manipulator import AdoraManipulator
@@ -118,11 +120,18 @@ def make_robot_from_config(config: RobotConfig):
         from operating_platform.robot.robots.aloha_manipulator import AlohaManipulator
         print("In AlohaManipulator")
         return AlohaManipulator(config)
+    elif isinstance(config, PikaV1RobotConfig):
+        from operating_platform.robot.robots.pika_v1.manipulator import PikaV1Manipulator
+        print("In PikaV1Manipulator")
+        return PikaV1Manipulator(config)
     
     # elif isinstance(config, AdoraDualRobotConfig):
     #     from lerobot.common.robot_devices.robots.adora_dual_manipulator import AdoraDualManipulator
     #     print("In AdoraDualRobotConfig")
     #     return AdoraDualManipulator(config)
+    else:
+        print("Not match robot")
+        raise ValueError(f"Robot type is not available.")
     
 
 
